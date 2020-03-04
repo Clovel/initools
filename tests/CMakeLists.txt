@@ -10,8 +10,8 @@ add_definitions(-DTEST)
 
 # Header files --------------------------------------------
 file(GLOB_RECURSE PUBLIC_HEADERS 
-    ${CMAKE_SOURCE_DIR}/inc/*.h
-    ${CMAKE_SOURCE_DIR}/inc/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../inc/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/../inc/*.hpp
 )
 set(HEADERS
     ${PUBLIC_HEADERS}
@@ -19,7 +19,7 @@ set(HEADERS
 
 # Source files --------------------------------------------
 file(GLOB_RECURSE TEST_SOURCES
-    ${CMAKE_SOURCE_DIR}/tests/main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.c
 )
 
 # Target definition ---------------------------------------

@@ -51,7 +51,7 @@ set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_PROJECT_BRIEF "INI file tools")
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/dest CACHE PATH "" FORCE)
+    set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/dest CACHE PATH "" FORCE)
 endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 
 # Allow CTest
@@ -78,7 +78,7 @@ message(STATUS "Pkgconfig extra path are: $ENV{PKG_CONFIG_PATH}")
 # Get the latest abbreviated commit hash of the working branch
 execute_process(
     COMMAND git log -1 --format=%h
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     OUTPUT_VARIABLE GIT_COMMIT_HASH
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
@@ -113,12 +113,12 @@ find_package(PkgConfig REQUIRED)
 if(PKG_CONFIG_FOUND)
     # Produce a pkg-config file
     configure_file (
-        ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.pc.in
-        ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.pc
+        ${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.pc.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.pc
         @ONLY
     )
     install (
-        FILES ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.pc    
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_PROJECT_NAME}.pc    
         DESTINATION lib/pkgconfig
     )
 endif(PKG_CONFIG_FOUND)
@@ -127,8 +127,8 @@ endif(PKG_CONFIG_FOUND)
 # Project configuration 
 #------------------------------------------------------------------------------
 
-include_directories(${CMAKE_SOURCE_DIR}/src)
-include_directories(${CMAKE_SOURCE_DIR}/inc)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc)
 
 #------------------------------------------------------------------------------
 # Sub-directories 
@@ -164,17 +164,17 @@ endif (ENABLE_EXAMPLES)
 #------------------------------------------------------------------------------
 
 set(COVERITY_FILES
-  " ${CMAKE_SOURCE_DIR}/build-coverity/output/summary.txt"
+  " ${CMAKE_CURRENT_SOURCE_DIR}/build-coverity/output/summary.txt"
 )
 
 add_custom_command(OUTPUT ${COVERITY_FILES}
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} mkdir -p build-coverity
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} cov-configure --gcc
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} cov-build --dir build-coverity make -j $(nproc)
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} cov-analyze --dir build-coverity --all --aggressiveness-level low --misra-config MISRA_c2012_MM.config
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} cov-commit-defects --dir build-coverity --host coverity3.freescale.net --user committer --password CoverityGuest --stream lib${PROJECT_NAME}
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} mkdir -p build-coverity
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-configure --gcc
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-build --dir build-coverity make -j $(nproc)
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-analyze --dir build-coverity --all --aggressiveness-level low --misra-config MISRA_c2012_MM.config
+    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-commit-defects --dir build-coverity --host coverity3.freescale.net --user committer --password CoverityGuest --stream lib${PROJECT_NAME}
     COMMAND ${CMAKE_COMMAND} -E touch ${COVERITY_FILES}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "run coverity"
 )
-add_custom_target(coverity DEPENDS ${COVERITY_FILES})
+add_custom_target(${CMAKE_PROJECT_NAME}-coverity DEPENDS ${COVERITY_FILES})

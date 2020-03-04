@@ -8,7 +8,7 @@ add_definitions(-DEXAMPLE)
 
 # Source files --------------------------------------------
 file(GLOB_RECURSE EXAMPLE_SOURCES
-    ${CMAKE_SOURCE_DIR}/examples/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
 # Target definition ---------------------------------------
