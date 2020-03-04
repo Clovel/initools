@@ -672,8 +672,8 @@ int INI::setUInt64(const std::string &pKey, const uint64_t &pValue, const std::s
     if(10 == pBase) {
         lVal = std::to_string(pValue);
     } else if (16 == pBase) {
-        char lStr[18U];
-        std::snprintf(lStr, 18U, "0x%016X", pValue);
+        char lStr[19U];
+        std::snprintf(lStr, 19U, "0x%016X", pValue);
         lVal = std::string(lStr);
     } else {
         std::cerr << "[ERROR] <INI::setUInt64> Unknown base specified" << std::endl;
@@ -700,8 +700,8 @@ int INI::setUInt32(const std::string &pKey, const uint32_t &pValue, const std::s
     if(10 == pBase) {
         lVal = std::to_string(pValue);
     } else if (16 == pBase) {
-        char lStr[10U];
-        std::snprintf(lStr, 10U, "0x%08X", pValue);
+        char lStr[11U];
+        std::snprintf(lStr, 11U, "0x%08X", pValue);
         lVal = std::string(lStr);
     } else {
         std::cerr << "[ERROR] <INI::setUInt32> Unknown base specified" << std::endl;
@@ -728,8 +728,8 @@ int INI::setUInt16(const std::string &pKey, const uint16_t &pValue, const std::s
     if(10 == pBase) {
         lVal = std::to_string(pValue);
     } else if (16 == pBase) {
-        char lStr[6U];
-        std::snprintf(lStr, 6U, "0x%04X", pValue);
+        char lStr[7U];
+        std::snprintf(lStr, 7U, "0x%04X", pValue);
         lVal = std::string(lStr);
     } else {
         std::cerr << "[ERROR] <INI::setUInt16> Unknown base specified" << std::endl;
@@ -756,8 +756,8 @@ int INI::setUInt8(const std::string &pKey, const uint8_t &pValue, const std::str
     if(10 == pBase) {
         lVal = std::to_string(pValue);
     } else if (16 == pBase) {
-        char lStr[4U];
-        std::snprintf(lStr, 4U, "0x%02X", pValue);
+        char lStr[5U];
+        std::snprintf(lStr, 5U, "0x%02X", pValue);
         lVal = std::string(lStr);
     } else {
         std::cerr << "[ERROR] <INI::setUInt8> Unknown base specified" << std::endl;
@@ -865,8 +865,8 @@ int INI::addUInt64(const std::string &pKey, const uint64_t &pValue, const std::s
     if(10 == pBase) {
         return addString(pKey, std::to_string(pValue), pSection);
     } else if (16 == pBase) {
-        char lStr[18U];
-        std::snprintf(lStr, 18U, "0x%016X", pValue);
+        char lStr[19U];
+        std::snprintf(lStr, 19U, "0x%016X", pValue);
         return addString(pKey, std::string(lStr), pSection);
     } else {
         std::cerr << "[ERROR] <INI::addUInt64> Unknown base specified" << std::endl;
@@ -878,8 +878,8 @@ int INI::addUInt32(const std::string &pKey, const uint32_t &pValue, const std::s
     if(10 == pBase) {
         return addString(pKey, std::to_string(pValue), pSection);
     } else if (16 == pBase) {
-        char lStr[10U];
-        std::snprintf(lStr, 10U, "0x%08X", pValue);
+        char lStr[11U];
+        std::snprintf(lStr, 11U, "0x%08X", pValue);
         return addString(pKey, std::string(lStr), pSection);
     } else {
         std::cerr << "[ERROR] <INI::addUInt32> Unknown base specified" << std::endl;
@@ -891,8 +891,8 @@ int INI::addUInt16(const std::string &pKey, const uint16_t &pValue, const std::s
     if(10 == pBase) {
         return addString(pKey, std::to_string(pValue), pSection);
     } else if (16 == pBase) {
-        char lStr[6U];
-        std::snprintf(lStr, 6U, "0x%04X", pValue);
+        char lStr[7U];
+        std::snprintf(lStr, 7U, "0x%04X", pValue);
         return addString(pKey, std::string(lStr), pSection);
     } else {
         std::cerr << "[ERROR] <INI::addUInt16> Unknown base specified" << std::endl;
@@ -904,8 +904,8 @@ int INI::addUInt8(const std::string &pKey, const uint8_t &pValue, const std::str
     if(10 == pBase) {
         return addString(pKey, std::to_string(pValue), pSection);
     } else if (16 == pBase) {
-        char lStr[4U];
-        std::snprintf(lStr, 4U, "0x%02X", pValue);
+        char lStr[5U];
+        std::snprintf(lStr, 5U, "0x%02X", pValue);
         return addString(pKey, std::string(lStr), pSection);
     } else {
         std::cerr << "[ERROR] <INI::addUInt8> Unknown base specified" << std::endl;
