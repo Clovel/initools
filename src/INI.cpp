@@ -943,6 +943,43 @@ int INI::addDouble(const std::string &pKey, const double &pValue, const std::str
     return addString(pKey, std::to_string(pValue), pSection);
 }
 
+int INI::removeSection(const std::string &pSection) {
+    /* Does this section exist ? */
+    if(!sectionExists(pSection)) {
+        /* This section doesn't exist ! */
+        std::cerr << "[ERROR] <INI::removeSection> Section doesn't exist" << std::endl;
+        return -1;
+    }
+
+    mSectionOrder.erase(find(mSectionOrder.begin(), mSectionOrder.end(), pSection));
+    mSections.erase(pSection);
+    mSectionElementOrder.erase(pSection);
+
+    return 0;
+}
+
+int INI::removeKey(const std::string &pSection, const std::string &pKey) {
+    /* Does this section exist ? */
+    if(!sectionExists(pSection)) {
+        /* This section doesn't exist ! */
+        std::cerr << "[ERROR] <INI::removeKey> Section doesn't exist" << std::endl;
+        return -1;
+    }
+
+    /* Does this key exist . */
+    if(!keyExists(pKey, pSection)) {
+        /* This key doesn't exist ! */
+        std::cerr << "[ERROR] <INI::removeKey> Key doesn't exist" << std::endl;
+        return -1;
+    }
+
+    mSections.at(pSection).erase(pKey);
+    std::vector<std::string> *lTempVector = &mSectionElementOrder.at(pSection);
+    lTempVector->erase(find(lTempVector->begin(), lTempVector->end(), pKey));
+    
+    return 0;
+}
+
 
 /* Generator */
 int INI::generateFile(const std::string &pDest) const {

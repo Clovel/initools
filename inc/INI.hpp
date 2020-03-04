@@ -88,6 +88,10 @@ class INI {
         int addBoolean(const std::string &pKey, const bool &pValue, const std::string &pSection = "default");
         int addDouble(const std::string &pKey, const double &pValue, const std::string &pSection = "default");
 
+        /* Removers */
+        int removeSection(const std::string &pSection);
+        int removeKey(const std::string &pSection, const std::string &pKey);
+
         /* Generator */
         virtual int generateFile(const std::string &pDest) const;
     protected:
