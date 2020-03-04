@@ -28,10 +28,10 @@ file(GLOB SOURCES
 # Link directories ----------------------------------------
 
 # Target definition ---------------------------------------
-add_library(${CMAKE_PROJECT_NAME}
+add_library(${CMAKE_PROJECT_NAME} SHARED
     ${SOURCES}
 )
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES 
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     PUBLIC_HEADER "${PUBLIC_HEADERS}"
 )
 
