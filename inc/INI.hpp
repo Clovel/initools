@@ -39,6 +39,9 @@ class INI {
 
         virtual ~INI();
 
+        /* Parser */
+        int parseFile(const std::string &pFile);
+
         /* Getters */
         std::string fileName(void) const;
 
@@ -95,6 +98,7 @@ class INI {
         /* Generator */
         virtual int generateFile(const std::string &pDest) const;
     protected:
+        bool mFileParsed;
         std::string mFileName;
         std::fstream mFileStream;
 

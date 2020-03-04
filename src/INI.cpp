@@ -130,12 +130,36 @@ bool INI::keyExists(const std::string &pKey, const std::string &pSection) const 
 
 /* INI class ------------------------------------------- */
 INI::INI(const std::string &pFile) {
+    mFileParsed = false;
+
+    int lResult = parseFile(pFile);
+    if(0 != lResult) {
+        std::cerr << "[ERROR] <INI::INI> Failed to parse file " << pFile << std::endl;
+        throw INIException();
+    }
+
+    mFileParsed = true;
+}
+
+INI::~INI() {
+    /* Empty for now */
+}
+
+int INI::parseFile(const std::string &pFile) {
+    if(mFileParsed) {
+        /* File has already been parsed, need to flush all data and start over */
+        std::cerr << "[ERROR] <INI::parseFile> Ini file is not empty, clearing data" << std::endl;
+        mSections.clear();
+        mSectionElementOrder.clear();
+        mSectionOrder.clear();
+    }
+
     mFileStream.open(pFile, std::ios::in | std::ios::out);
 
     /* Check if the file was opened correctly */
     if(!mFileStream.is_open()) {
-        std::cerr << "[ERROR] <INI::INI> Failed to open file " << pFile << std::endl;
-        throw INIException();
+        std::cerr << "[ERROR] <INI::parseFile> Failed to open file " << pFile << std::endl;
+        return -1;
     }
 
     /* Set default section name */
@@ -163,16 +187,16 @@ INI::INI(const std::string &pFile) {
             }
 
             /* Something went wrong if you are here */
-            std::cerr << "[ERROR] <INI::INI> Unknown parsing error at line "
+            std::cerr << "[ERROR] <INI::parseFile> Unknown parsing error at line "
                       << lLineCount << std::endl;
             mFileStream.close();
-            throw INIException();
+            return -1;
         }
 
         /* Check if this line is a comment */
         if('#' == lLine[0U] || ';' == lLine[0U]) {
             /* This is a comment */
-            std::cout << "[DEBUG] <INI::INI> (" << lLineCount 
+            std::cout << "[DEBUG] <INI::parseFile> (" << lLineCount 
                       << ") This is a comment" << std::endl;
             continue;
         }
@@ -183,10 +207,10 @@ INI::INI(const std::string &pFile) {
             size_t lPos = lLine.find_first_of(']');
             if(std::string::npos == lPos) {
                 /* End og tag not found, this INI file is corrupt */
-                std::cerr << "[ERROR] <INI::INI> Found unclosed section tag at line " 
+                std::cerr << "[ERROR] <INI::parseFile> Found unclosed section tag at line " 
                           << lLineCount << std::endl;
                 mFileStream.close();
-                throw INIException();
+                return -1;
             }
 
             /* Get the section name */
@@ -195,9 +219,9 @@ INI::INI(const std::string &pFile) {
             /* Does this section exist already ? */
             if(sectionExists(lSection)) {
                 /* This section already exists ! */
-                std::cerr << "[ERROR] <INI::INI> Duplicate Section in INI file at line " << lLineCount << std::endl;
+                std::cerr << "[ERROR] <INI::parseFile> Duplicate Section in INI file at line " << lLineCount << std::endl;
                 mFileStream.close();
-                throw INIException();
+                return -1;
             }
 
             /* Save the section in the section order vector */
@@ -211,10 +235,10 @@ INI::INI(const std::string &pFile) {
         std::vector<std::string> lKeyValue = split(lLine, '=');
 
         if(2U != lKeyValue.size()) {
-            std::cerr << "[ERROR] <INI::INI> Invalid key/name pair at line "
+            std::cerr << "[ERROR] <INI::parseFile> Invalid key/name pair at line "
                       << lLineCount << std::endl;
             mFileStream.close();
-            throw INIException();
+            return -1;
         }
 
         /* We got a valid keyvalue pair */
@@ -237,18 +261,18 @@ INI::INI(const std::string &pFile) {
 
         /* This is commented because we accept spaces in the keyname */
         // if(std::string::npos != lKey.find(' ')) {
-        //     std::cerr << "[ERROR] <INI::INI> Space in key at line "
+        //     std::cerr << "[ERROR] <INI::parseFile> Space in key at line "
         //             << lLineCount << std::endl;
         //     mFileStream.close();
-        //     throw INIException();
+        //     return -1;
         // }
 
         /* This is commented because we accept spaces in the value */
         // if(std::string::npos != lValue.find(' ')) {
-        //     std::cerr << "[ERROR] <INI::INI> Space in value at line "
+        //     std::cerr << "[ERROR] <INI::parseFile> Space in value at line "
         //             << lLineCount << std::endl;
         //     mFileStream.close();
-        //     throw INIException();
+        //     return -1;
         // }
 
         /* Does this key exist already ? 
@@ -257,9 +281,9 @@ INI::INI(const std::string &pFile) {
         if(!lNewSection) {
             if(keyExists(lKey)) {
                 /* This key already exists ! */
-                std::cerr << "[ERROR] <INI::INI> Duplicate Key in INI file at line " << lLineCount << std::endl;
+                std::cerr << "[ERROR] <INI::parseFile> Duplicate Key in INI file at line " << lLineCount << std::endl;
                 mFileStream.close();
-                throw INIException();
+                return -1;
             }
         }
 
@@ -272,15 +296,13 @@ INI::INI(const std::string &pFile) {
 
         lNewSection = false;
 
-        std::cout << "[INFO ] <INI::INI> [" << lSection << "] " << lKey << " = " << mSections.at(lSection).at(lKey) << std::endl;
+        std::cout << "[INFO ] <INI::parseFile> [" << lSection << "] " << lKey << " = " << mSections.at(lSection).at(lKey) << std::endl;
     }
 
-    std::cout << "[INFO ] <INI::INI> Parsed INI file " << pFile << " successfully !" << std::endl;
+    std::cout << "[INFO ] <INI::parseFile> Parsed INI file " << pFile << " successfully !" << std::endl;
     mFileStream.close();
-}
 
-INI::~INI() {
-    /* Empty for now */
+    return 0;
 }
 
 std::string INI::fileName(void) const {
