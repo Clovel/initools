@@ -106,9 +106,9 @@ class INI {
         std::map<std::string, std::vector<std::string>> mSectionElementOrder;
         std::vector<std::string> mSectionOrder;
 
-    private:
         bool sectionExists(const std::string &pSection) const;
         bool keyExists(const std::string &pKey, const std::string &pSection = "default") const;
+    private:
 };
 
 #endif /* INI_HPP */
