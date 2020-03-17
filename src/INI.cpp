@@ -235,10 +235,41 @@ int INI::parseFile(const std::string &pFile) {
         std::vector<std::string> lKeyValue = split(lLine, '=');
 
         if(2U != lKeyValue.size()) {
-            std::cerr << "[ERROR] <INI::parseFile> Invalid key/name pair at line "
-                      << lLineCount << std::endl;
-            mFileStream.close();
-            return -1;
+            if(1U == lKeyValue.size()) {
+                /* Either the key is empty or the value.
+                 * An empty key is invalid.
+                 * An empty value is tolerated.
+                 */
+                if('=' == lLine.at(0U)) {
+                    /* First char is '=', meanign that the key is empty */
+                    std::cerr << "[ERROR] <INI::parseFile> Empty key at line "
+                              << lLineCount << std::endl;
+                    mFileStream.close();
+                    return -1;
+                } else if('=' == lLine.back()){
+                    /* Value is empty. We tolerate this case
+                     * by adding an empty string for the value
+                     */
+                    lKeyValue.push_back(std::string());
+                    std::cout << "[WARN ] <INI::parseFile> Empty value at line "
+                              << lLineCount << std::endl;
+                } else {
+                    /* There is no equal sign in the string */
+                    std::cerr << "[ERROR] <INI::parseFile> No '=' sign at line "
+                              << lLineCount << std::endl;
+                    mFileStream.close();
+                    return -1;
+                }
+            } else {
+                /* Three strings seperated by an equal sign ?
+                 * TODO : Do we consider the second '=' as
+                 * part of the value string ?
+                 */
+                std::cerr << "[ERROR] <INI::parseFile> Invalid key/name pair at line "
+                        << lLineCount << std::endl;
+                mFileStream.close();
+                return -1;
+            }
         }
 
         /* We got a valid keyvalue pair */
