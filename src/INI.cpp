@@ -101,9 +101,19 @@ static void removeFirstChar(std::string &pStr, const char pChar) {
 }
 
 static void removeTrailingChar(std::string &pStr, const char pChar) {
-    if(pChar == pStr[pStr.size() - 1]) {
+    if(pChar == pStr.at(pStr.size() - 1)) {
         pStr = pStr.substr(0U, pStr.size() - 1);
     }
+}
+
+static void frontTrim(std::string &pStr, const std::string &pChars) {
+    size_t lStart = pStr.find_first_not_of(pChars);
+    pStr = (lStart == std::string::npos) ? pStr : pStr.substr(lStart);
+}
+
+static void backTrim(std::string &pStr, const std::string &pChars) {
+    size_t lEnd = pStr.find_last_not_of(pChars);
+    pStr = (lEnd == std::string::npos) ? pStr : pStr.substr(0U, lEnd + 1U);
 }
 
 static void removeChar(std::vector<std::string> &pStrs, const char pChar) {
@@ -193,6 +203,10 @@ int INI::parseFile(const std::string &pFile) {
             return -1;
         }
 
+        /* Remove prefix and trailing whitespaces */
+        frontTrim(lLine, " ");
+        backTrim(lLine, " ");
+
         /* Check if this line is a comment */
         if('#' == lLine[0U] || ';' == lLine[0U]) {
             /* This is a comment */
@@ -275,20 +289,6 @@ int INI::parseFile(const std::string &pFile) {
         /* We got a valid keyvalue pair */
         lKey   = lKeyValue[0U];
         lValue = lKeyValue[1U];
-
-        /* Remove prefix and trailing whitespaces */
-        while(' ' == lKey[0U]) {
-            removeFirstChar(lKey, ' ');
-        }
-        while(' ' == lKey[lKey.length() - 1U]) {
-            removeTrailingChar(lKey, ' ');
-        }
-        while(' ' == lValue[0U]) {
-            removeFirstChar(lKey, ' ');
-        }
-        while(' ' == lValue[lValue.length() - 1U]) {
-            removeTrailingChar(lKey, ' ');
-        }
 
         /* This is commented because we accept spaces in the keyname */
         // if(std::string::npos != lKey.find(' ')) {
