@@ -347,6 +347,18 @@ std::vector<std::string> INI::getKeys(const std::string &pSection) const {
     return lKeys;
 }
 
+std::vector<std::string> INI::getValues(const std::string &pSection) const {
+    std::vector<std::string> lValues;
+
+    if(mSections.end() != mSections.find(pSection)) {
+        for(const auto &lElmt : mSections.at(pSection)) {
+            lValues.push_back(lElmt.second);
+        }
+    }
+
+    return lValues;
+}
+
 int INI::getInt64(const std::string &pKey, int64_t &pValue, const std::string &pSection) const {
     std::string lVal;
 

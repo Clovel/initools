@@ -51,6 +51,7 @@ class INI {
         
         std::vector<std::string> getSections(void) const;
         std::vector<std::string> getKeys(const std::string &pSection = "default") const;
+        std::vector<std::string> getValues(const std::string &pSection = "default") const;
 
         int getInt64(const std::string &pKey, int64_t &pValue, const std::string &pSection = "default") const;
         int getInt32(const std::string &pKey, int32_t &pValue, const std::string &pSection = "default") const;
