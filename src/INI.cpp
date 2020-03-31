@@ -403,7 +403,7 @@ int INI::getInt64(const std::string &pKey, int64_t &pValue, const std::string &p
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getInt64> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getInt64> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -416,7 +416,7 @@ int INI::getInt64(const std::string &pKey, int64_t &pValue, const std::string &p
         pValue = strtoll(mSections.at(pSection).at(pKey).c_str(), &lEnd, 10);
     }
 
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getInt32(const std::string &pKey, int32_t &pValue, const std::string &pSection) const {
@@ -426,7 +426,7 @@ int INI::getInt32(const std::string &pKey, int32_t &pValue, const std::string &p
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getInt32> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getInt32> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -439,7 +439,7 @@ int INI::getInt32(const std::string &pKey, int32_t &pValue, const std::string &p
         pValue = strtol(mSections.at(pSection).at(pKey).c_str(), &lEnd, 10);
     }
 
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getInt16(const std::string &pKey, int16_t &pValue, const std::string &pSection) const {
@@ -449,7 +449,7 @@ int INI::getInt16(const std::string &pKey, int16_t &pValue, const std::string &p
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getInt16> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getInt16> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -471,7 +471,7 @@ int INI::getInt16(const std::string &pKey, int16_t &pValue, const std::string &p
         pValue = (int16_t)lTempVal;
     }
 
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getInt8(const std::string &pKey, int8_t &pValue, const std::string &pSection) const {
@@ -481,7 +481,7 @@ int INI::getInt8(const std::string &pKey, int8_t &pValue, const std::string &pSe
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getInt8> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getInt8> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -503,7 +503,7 @@ int INI::getInt8(const std::string &pKey, int8_t &pValue, const std::string &pSe
         pValue = (int8_t)lTempVal;
     }
 
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getUInt64(const std::string &pKey, uint64_t &pValue, const std::string &pSection) const {
@@ -513,7 +513,7 @@ int INI::getUInt64(const std::string &pKey, uint64_t &pValue, const std::string 
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getUInt64> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getUInt64> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -526,7 +526,7 @@ int INI::getUInt64(const std::string &pKey, uint64_t &pValue, const std::string 
         pValue = strtoull(mSections.at(pSection).at(pKey).c_str(), &lEnd, 10);
     }
     
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getUInt32(const std::string &pKey, uint32_t &pValue, const std::string &pSection) const {
@@ -536,7 +536,7 @@ int INI::getUInt32(const std::string &pKey, uint32_t &pValue, const std::string 
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getUInt32> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getUInt32> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -549,7 +549,7 @@ int INI::getUInt32(const std::string &pKey, uint32_t &pValue, const std::string 
         pValue = strtoul(mSections.at(pSection).at(pKey).c_str(), &lEnd, 10);
     }
     
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getUInt16(const std::string &pKey, uint16_t &pValue, const std::string &pSection) const {
@@ -559,7 +559,7 @@ int INI::getUInt16(const std::string &pKey, uint16_t &pValue, const std::string 
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getUInt16> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getUInt16> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -581,7 +581,7 @@ int INI::getUInt16(const std::string &pKey, uint16_t &pValue, const std::string 
         pValue = (uint16_t)lTempVal;
     }
     
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getUInt8(const std::string &pKey, uint8_t &pValue, const std::string &pSection) const {
@@ -591,7 +591,7 @@ int INI::getUInt8(const std::string &pKey, uint8_t &pValue, const std::string &p
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::getUInt8> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::getUInt8> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -613,7 +613,7 @@ int INI::getUInt8(const std::string &pKey, uint8_t &pValue, const std::string &p
         pValue = (uint8_t)lTempVal;
     }
     
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 int INI::getString(const std::string &pKey, std::string &pValue, const std::string &pSection) const {
@@ -627,7 +627,7 @@ int INI::getBoolean(const std::string &pKey, bool &pValue, const std::string &pS
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::get> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::get> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
@@ -657,14 +657,14 @@ int INI::getDouble(const std::string &pKey, double &pValue, const std::string &p
         /* Key/Value pair not found.
          * This is either because the section is unknown
          * or the key is unknown */
-        std::cerr << "[ERROR] <INI::get> Key/value pair not found !" << std::endl;
+        std::cerr << "[ERROR] <INI::get> Key/value pair not found (" << pSection << ", " << pKey << ")" << std::endl;
         return -1;
     }
 
     /* Cast the value */
     char *lEnd = 0;
     pValue = strtod(mSections.at(pSection).at(pKey).c_str(), &lEnd);
-    return *lEnd == 0 ? -1 : 0;
+    return *lEnd == 0 ? 0 : -1;
 }
 
 
