@@ -390,6 +390,12 @@ std::vector<std::string> INI::getValues(const std::string &pSection) const {
     return lValues;
 }
 
+std::map<std::string, std::string> INI::getSectionContents(const std::string &pSection) const {
+    if(sectionExists(pSection)) {
+        return mSections.at(pSection);
+    } else return std::map<std::string, std::string>();
+}
+
 int INI::getInt64(const std::string &pKey, int64_t &pValue, const std::string &pSection) const {
     std::string lVal;
 
