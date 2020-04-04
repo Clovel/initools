@@ -45,10 +45,13 @@ class INI {
         /* Getters */
         std::string fileName(void) const;
 
+        bool sectionExists(const std::string &pSection) const;
+        bool keyExists(const std::string &pKey, const std::string &pSection = "default") const;
+
         int getValue(const std::string &pKey,
             std::string &pOut,
             const std::string &pSection = "default") const;
-        
+
         std::vector<std::string> getSections(void) const;
         std::vector<std::string> getKeys(const std::string &pSection = "default") const;
         std::vector<std::string> getValues(const std::string &pSection = "default") const;
@@ -108,8 +111,6 @@ class INI {
         std::map<std::string, std::vector<std::string>> mSectionElementOrder;
         std::vector<std::string> mSectionOrder;
 
-        bool sectionExists(const std::string &pSection) const;
-        bool keyExists(const std::string &pKey, const std::string &pSection = "default") const;
     private:
 };
 
