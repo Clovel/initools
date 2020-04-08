@@ -30,4 +30,4 @@ link_libraries(${CMAKE_PROJECT_NAME})
 
 # Test definition -----------------------------------------
 #add_test( testname Exename arg1 arg2 ... )
-add_test( osco_test_default ${CMAKE_PROJECT_NAME}-tests -1 )
+add_test( ${CMAKE_PROJECT_NAME}_test_default ${CMAKE_PROJECT_NAME}-tests -1 )

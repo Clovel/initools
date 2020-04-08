@@ -158,23 +158,3 @@ if(ENABLE_EXAMPLES)
 else()
     message(STATUS "EXAMPLES disabled")
 endif (ENABLE_EXAMPLES)
-
-#------------------------------------------------------------------------------
-# Gencov custom command
-#------------------------------------------------------------------------------
-
-set(COVERITY_FILES
-  " ${CMAKE_CURRENT_SOURCE_DIR}/build-coverity/output/summary.txt"
-)
-
-add_custom_command(OUTPUT ${COVERITY_FILES}
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} mkdir -p build-coverity
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-configure --gcc
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-build --dir build-coverity make -j $(nproc)
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-analyze --dir build-coverity --all --aggressiveness-level low --misra-config MISRA_c2012_MM.config
-    COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_CURRENT_SOURCE_DIR} cov-commit-defects --dir build-coverity --host coverity3.freescale.net --user committer --password CoverityGuest --stream lib${PROJECT_NAME}
-    COMMAND ${CMAKE_COMMAND} -E touch ${COVERITY_FILES}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "run coverity"
-)
-add_custom_target(${CMAKE_PROJECT_NAME}-coverity DEPENDS ${COVERITY_FILES})
