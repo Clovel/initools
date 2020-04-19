@@ -210,8 +210,6 @@ int INI::parseFile(const std::string &pFile) {
         /* Check if this line is a comment */
         if('#' == lLine[0U] || ';' == lLine[0U]) {
             /* This is a comment */
-            std::cout << "[DEBUG] <INI::parseFile> (" << lLineCount 
-                      << ") This is a comment" << std::endl;
             continue;
         }
 
@@ -327,7 +325,7 @@ int INI::parseFile(const std::string &pFile) {
 
         lNewSection = false;
 
-        std::cout << "[INFO ] <INI::parseFile> [" << lSection << "] " << lKey << " = " << mSections.at(lSection).at(lKey) << std::endl;
+        //std::cout << "[INFO ] <INI::parseFile> [" << lSection << "] " << lKey << " = " << mSections.at(lSection).at(lKey) << std::endl;
     }
 
     std::cout << "[INFO ] <INI::parseFile> Parsed INI file " << pFile << " successfully !" << std::endl;
@@ -1056,8 +1054,8 @@ int INI::removeKey(const std::string &pSection, const std::string &pKey) {
 int INI::generateFile(const std::string &pDest) const {
     /* Are we overwriting our original INI file ? */
     if(mFileName == pDest) {
-        /* Overwrite detectedn not supported for now */
-        std::cerr << "[ERROR] <INI::generateFile> Overwrite detectedn not supported for now." << std::endl;
+        /* Overwrite detected not supported for now */
+        std::cerr << "[ERROR] <INI::generateFile> Overwrite detected not supported for now." << std::endl;
         return -1;
     }
 
